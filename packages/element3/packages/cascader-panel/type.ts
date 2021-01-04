@@ -1,5 +1,9 @@
 export interface IOptions {
-  value: string | number
-  label: string
-  children?: IOptions[]
+  [key: string]: string | number | IOptions[]
+}
+
+export interface IConfig {
+  value?: string
+  label?: string
+  children?: string
 }

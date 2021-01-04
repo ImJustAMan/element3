@@ -1,4 +1,4 @@
-import { IOptions } from './type'
+import { IConfig, IOptions } from './type'
 
 let id = 0
 
@@ -12,21 +12,21 @@ export default class Node {
   label: string
   leaf: boolean
   id: number
-  constructor(options: IOptions, parentNode?: Node) {
+  constructor(options: IOptions, config: IConfig, parentNode?: Node) {
     this.options = options
     this.parent = parentNode
     this.pathNodes = this.calcNodes()
     this.level = parentNode ? parentNode.level + 1 : 1
 
-    this.value = options.value
-    this.label = options.label
-    this.children = (this.options.children || []).map(
-      (item) => new Node(item, this)
+    this.value = options[config.value] as number | string
+    this.label = options[config.label] as string
+    this.children = (this.options[config.children] as IOptions[])?.map(
+      (item) => new Node(item, config, this)
     )
     this.leaf = !this.children || this.children.length === 0
     this.id = id++
   }
-  getValuePath(): IOptions['value'][] {
+  getValuePath(): (number | string)[] {
     return this.pathNodes.map((item) => item.value)
   }
   calcNodes(this: Node): Node[] {
