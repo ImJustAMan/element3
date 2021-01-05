@@ -11,11 +11,16 @@
 </template>
 
 <script>
-import { ref, defineComponent, onMounted, toRefs, provide } from 'vue'
+import { ref, defineComponent, onMounted, toRefs, provide, computed } from 'vue'
 import { CascaderPanelProps } from './props'
 import ElCascaderMenu from './CascaderMenu'
 import Node from './Node.ts'
 import { useEmitter } from '../../src/use/emitter'
+const defaultConfig = {
+  value: 'value',
+  label: 'label',
+  children: 'children'
+}
 
 export default defineComponent({
   components: {
@@ -25,9 +30,15 @@ export default defineComponent({
   props: CascaderPanelProps,
   setup(props, { emit }) {
     const { on } = useEmitter()
-    const { options } = toRefs(props)
+    const { options, props: config } = toRefs(props)
     const selectNodeValue = ref([])
-    const menus = ref([options.value.map((item) => new Node(item))])
+    const internalConfig = computed(() => ({
+      ...defaultConfig,
+      ...config.value
+    }))
+    const menus = ref([
+      options.value.map((item) => new Node(item, internalConfig.value))
+    ])
     provide('selectNodeValue', selectNodeValue)
 
     onMounted(() => {

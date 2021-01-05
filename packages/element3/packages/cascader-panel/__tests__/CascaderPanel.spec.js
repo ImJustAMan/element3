@@ -100,4 +100,67 @@ describe('CascaderPanel', () => {
       expect(wrapper.findAll('.el-cascader-menu').length).toBe(2)
     })
   })
+  describe('props', () => {
+    it('value', async () => {
+      const wrapper = mount(CascaderPanel, {
+        props: {
+          options: [{ changedValue: 'changedValue' }],
+          props: { value: 'changedValue' }
+        }
+      })
+
+      await wrapper.find('.el-cascader-node').trigger('click')
+      expect(wrapper.emitted().change[0]).toEqual([['changedValue']])
+    })
+    it('label', async () => {
+      const wrapper = mount(CascaderPanel, {
+        props: {
+          options: [{ changedLabel: 'changedLabel' }],
+          props: { label: 'changedLabel' }
+        }
+      })
+
+      expect(wrapper.find('.el-cascader-node').text()).toBe('changedLabel')
+    })
+    it('label', async () => {
+      const wrapper = mount(CascaderPanel, {
+        props: {
+          options: [{ changedLabel: 'changedLabel' }],
+          props: { label: 'changedLabel' }
+        }
+      })
+
+      expect(wrapper.find('.el-cascader-node').text()).toBe('changedLabel')
+    })
+    it('children', async () => {
+      const wrapper = mount(CascaderPanel, {
+        props: {
+          options: [
+            {
+              value: 'value',
+              label: 'label',
+              changedChildren: [
+                {
+                  value: 'childValue',
+                  label: 'childLabel'
+                }
+              ]
+            }
+          ],
+          props: {
+            children: 'changedChildren'
+          }
+        }
+      })
+
+      await wrapper.find('.el-cascader-node').trigger('click')
+      expect(wrapper.find('[data-level = "2"] .el-cascader-node').text()).toBe(
+        'childLabel'
+      )
+      await wrapper
+        .find('[data-level = "2"] .el-cascader-node')
+        .trigger('click')
+      expect(wrapper.emitted().change[0]).toEqual([['value', 'childValue']])
+    })
+  })
 })
