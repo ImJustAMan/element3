@@ -3,6 +3,8 @@
     tag="ul"
     role="menu"
     class="el-cascader-menu"
+    wrap-class="el-cascader-menu__wrap"
+    view-class="el-cascader-menu__list"
     :data-level="level"
   >
     <el-cascader-node v-for="node in options" :node="node" :key="node.id">
