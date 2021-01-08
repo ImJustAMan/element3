@@ -4,7 +4,8 @@
     :class="{
       'el-cascader-node': true,
       'is-active': showCheckedIcon,
-      'in-active-path': !node.leaf && selectNodeValue.includes(node.value)
+      'in-active-path': !node.leaf && selectNodeValue.includes(node.value),
+      'is-disabled': node.disabled
     }"
     :key="node.value"
     @click="handleClick"
@@ -39,6 +40,7 @@ export default defineComponent({
     )
 
     const handleClick = () => {
+      if (node.value.disabled) return
       if (node.value.leaf) {
         dispatch('change', node.value.getValuePath())
       } else {

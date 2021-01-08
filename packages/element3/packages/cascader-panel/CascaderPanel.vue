@@ -19,7 +19,9 @@ import { useEmitter } from '../../src/use/emitter'
 const defaultConfig = {
   value: 'value',
   label: 'label',
-  children: 'children'
+  children: 'children',
+  disabled: 'disabled',
+  emitPath: true
 }
 
 export default defineComponent({
