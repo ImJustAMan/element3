@@ -13,7 +13,9 @@
       v-if="showCheckedIcon"
       class="el-icon-check el-cascader-node__prefix"
     ></i>
-    {{ node.label }}
+    <span class="el-cascader-node__label">
+      {{ node.label }}
+    </span>
   </li>
 </template>
 

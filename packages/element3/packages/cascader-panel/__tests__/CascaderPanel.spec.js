@@ -122,16 +122,6 @@ describe('CascaderPanel', () => {
 
       expect(wrapper.find('.el-cascader-node').text()).toBe('changedLabel')
     })
-    it('label', async () => {
-      const wrapper = mount(CascaderPanel, {
-        props: {
-          options: [{ changedLabel: 'changedLabel' }],
-          props: { label: 'changedLabel' }
-        }
-      })
-
-      expect(wrapper.find('.el-cascader-node').text()).toBe('changedLabel')
-    })
     it('children', async () => {
       const wrapper = mount(CascaderPanel, {
         props: {
