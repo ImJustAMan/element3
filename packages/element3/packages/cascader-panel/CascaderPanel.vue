@@ -16,13 +16,8 @@ import { CascaderPanelProps } from './props'
 import ElCascaderMenu from './CascaderMenu'
 import Node from './Node.ts'
 import { useEmitter } from '../../src/use/emitter'
-const defaultConfig = {
-  value: 'value',
-  label: 'label',
-  children: 'children',
-  disabled: 'disabled',
-  emitPath: true
-}
+import { defaultConfig } from './defaultConfig'
+import merge from '../../src/utils/merge'
 
 export default defineComponent({
   components: {
@@ -34,10 +29,9 @@ export default defineComponent({
     const { on } = useEmitter()
     const { options, props: config } = toRefs(props)
     const selectNodeValue = ref([])
-    const internalConfig = computed(() => ({
-      ...defaultConfig,
-      ...config.value
-    }))
+    const internalConfig = computed(() =>
+      merge({}, defaultConfig, config.value)
+    )
     const menus = ref([
       options.value.map((item) => new Node(item, internalConfig.value))
     ])
